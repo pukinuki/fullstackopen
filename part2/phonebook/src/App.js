@@ -1,4 +1,5 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import axios from 'axios'
 import PersonForm from './components/PersonForm'
 import Filter from './components/Filter'
 import Persons from './components/Persons'
@@ -6,16 +7,21 @@ import Header from './components/Header'
 
 const App = () => {
 
-  const [persons, setPersons] = useState([
-    { 
-      id: 0,
-      name: 'Arto Hellas', 
-      number: '39-44-5323523'
-    }
-  ]) 
+  const [persons, setPersons] = useState([]) 
   const [newFilter, setNewFilter] = useState('')
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState('')
+
+  const hook = ()=> {
+    axios
+    .get('http://localhost:3001/persons')
+    .then(response =>
+      setPersons(response.data)
+    )
+  }
+  
+  useEffect(hook,[])
+
   return (
     <div>
       <Header header={'Phonebook'}/>

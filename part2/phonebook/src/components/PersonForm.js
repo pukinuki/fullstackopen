@@ -9,7 +9,7 @@ const PersonForm = ({persons, setPersons, newName, setNewName, newNumber, setNew
         }
         else {
           const person = { 
-            id : persons.length,
+            id : persons.length+1,
             name: newName,
             number: newNumber
           }
