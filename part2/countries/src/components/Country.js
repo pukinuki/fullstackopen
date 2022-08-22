@@ -13,11 +13,11 @@ const Languages = ({languages}) => {
     )
 }
 
-const Weather = ({capital, lat, lon}) => {
+const Weather = ({capital}) => {
     const api_key = process.env.REACT_APP_API_KEY
 
     axios
-        .get(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${api_key}`)
+        .get(`https://api.openweathermap.org/data/2.5/weather?q=${capital}&units=metric&appid=${api_key}`)
         .then(response =>
             console.log(response.data)
             )
@@ -40,7 +40,7 @@ const Country = ({country}) => {
             <div>area {country.area}</div>
             <Languages languages={country.languages} />
             <img src = {country.flags.png} alt = 'Country flag'/>
-            <Weather capital={country.capital[0]} lat={country.latlng[0]} lon={country.latlng[1]} />
+            <Weather capital={country.capital[0]} />
         </>
     )
 }
