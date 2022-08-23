@@ -1,15 +1,8 @@
 import { useState, useEffect } from 'react'
 import axios from 'axios'
 import CountriesResult from './components/CountriesResult'
+import FindCountries from './components/FindCountries'
 
-const FindCountries = ({value, onChange}) =>
-  <div>
-    find countries 
-    <input value={value} onChange={onChange}/>
-  </div>
-
-
-  
 function App() {
 
   const [newCountry, setNewCountry] = useState('')
