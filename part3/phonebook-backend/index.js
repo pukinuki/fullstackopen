@@ -1,5 +1,6 @@
 const http = require('http')
 const express = require('express')
+const morgan = require('morgan')
 
 let persons = [
     {
@@ -28,6 +29,15 @@ const generateRandomID = () => Math.floor(Math.random()*10000)
 
 const app = express()
 
+app.use(express.json())
+morgan.token('jsonBody', (req) => {
+  if (Object.keys(req.body).length>0)
+    return JSON.stringify(req.body)
+  else
+    return ''
+})
+app.use(morgan(':method :url :status :res[content-length] - :response-time ms :jsonBody'))
+
 app.get('/api/persons', (request, response) => {
     response.json(persons)
 })
@@ -55,8 +65,6 @@ app.delete('/api/persons/:id', (request,response) => {
 
   response.status(204).end()
 })
-
-app.use(express.json())
 
 app.post('/api/persons', (request, response) => {
   
