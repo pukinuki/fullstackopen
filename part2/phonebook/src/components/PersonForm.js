@@ -1,11 +1,20 @@
-import React from 'react';
+import React from 'react'
+import personsService from '../services/persons'
 
 const PersonForm = ({persons, setPersons, newName, setNewName, newNumber, setNewNumber}) => {
     const addPerson = (event) => {
         event.preventDefault()
     
-        if (persons.filter(p=>p.name===newName).length===1) {
-          alert(`${newName} is already added to phonebook`)
+        const personInPhonebook = persons.filter(p=>p.name===newName)
+        if (personInPhonebook.length===1) {
+          //alert(`${newName} is already added to phonebook`)
+          if (window.confirm(`${newName} is already added to phonebook, replace the old number with a new one?`)) {
+            const newPhonePerson = {...personInPhonebook[0], number: newNumber} 
+            personsService
+              .update(newPhonePerson.id,newPhonePerson)
+              .then(returnedPerson => setPersons(persons.map(p => p.id!== newPhonePerson.id ? p : returnedPerson)))
+          }
+           
         }
         else {
           const person = { 
@@ -13,9 +22,15 @@ const PersonForm = ({persons, setPersons, newName, setNewName, newNumber, setNew
             name: newName,
             number: newNumber
           }
-          setPersons(persons.concat(person))
-          setNewName('')
-          setNewNumber('')
+          
+          personsService
+            .create(person)
+            .then(returnedPerson=> {
+              setPersons(persons.concat(returnedPerson))
+              setNewName('')
+              setNewNumber('')
+             })
+
         }
       }
     

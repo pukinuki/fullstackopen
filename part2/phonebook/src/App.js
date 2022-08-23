@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react'
-import axios from 'axios'
 import PersonForm from './components/PersonForm'
 import Filter from './components/Filter'
 import Persons from './components/Persons'
 import Header from './components/Header'
+import personsService from './services/persons'
 
 const App = () => {
 
@@ -13,14 +13,17 @@ const App = () => {
   const [newNumber, setNewNumber] = useState('')
 
   const hook = ()=> {
-    axios
-    .get('http://localhost:3001/persons')
-    .then(response =>
-      setPersons(response.data)
+    personsService
+    .getAll()
+    .then(initialPersons =>
+      setPersons(initialPersons)
     )
   }
   
   useEffect(hook,[])
+
+  const filterPersons = () =>
+    persons.filter(p=>p.name.toLowerCase().includes(newFilter.toLowerCase()))
 
   return (
     <div>
@@ -33,7 +36,7 @@ const App = () => {
         newNumber={newNumber} setNewNumber={setNewNumber}
       />
       <Header header={'Numbers'}/>
-      <Persons persons = {persons} newFilter = {newFilter}/>
+      <Persons persons = {filterPersons()} setPersons={setPersons}/>
 
     </div>
   )

@@ -3,6 +3,7 @@ import React from 'react';
 const Filter = ({newFilter, setNewFilter}) => {
     
     const handleFilterChange = (event)=> {
+        event.preventDefault()
         setNewFilter(event.target.value)
     }
 
