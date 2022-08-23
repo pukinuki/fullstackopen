@@ -1,7 +1,7 @@
 import React from 'react'
 import personsService from '../services/persons'
 
-const PersonForm = ({persons, setPersons, newName, setNewName, newNumber, setNewNumber}) => {
+const PersonForm = ({persons, setPersons, newName, setNewName, newNumber, setNewNumber, setNotification}) => {
     const addPerson = (event) => {
         event.preventDefault()
     
@@ -12,7 +12,31 @@ const PersonForm = ({persons, setPersons, newName, setNewName, newNumber, setNew
             const newPhonePerson = {...personInPhonebook[0], number: newNumber} 
             personsService
               .update(newPhonePerson.id,newPhonePerson)
-              .then(returnedPerson => setPersons(persons.map(p => p.id!== newPhonePerson.id ? p : returnedPerson)))
+              .then(returnedPerson => {
+                setPersons(persons.map(p => p.id!== newPhonePerson.id ? p : returnedPerson))
+
+                const notif = {
+                  message: `Phone changed for ${returnedPerson.name}`,
+                  type: 'notification'
+                }
+                setNotification(notif)
+                setTimeout(() => {
+                  setNotification({message:'', type:''})
+                }, 5000)
+              })
+              .catch(error => {
+                const errorNotif = {
+                  message: `Information of ${newPhonePerson.name} has already been removed from server`,
+                  type: 'error'
+                }
+                setNotification(
+                  errorNotif
+                )
+                setTimeout(() => {
+                  setNotification({message:'', type:''})
+                }, 5000)
+                setPersons(persons.filter(p => p.id!== newPhonePerson.id))
+              }) 
           }
            
         }
@@ -29,6 +53,16 @@ const PersonForm = ({persons, setPersons, newName, setNewName, newNumber, setNew
               setPersons(persons.concat(returnedPerson))
               setNewName('')
               setNewNumber('')
+
+              const notif = {
+                message: `Added ${returnedPerson.name}`,
+                type: 'notification'
+              }
+              setNotification(notif)
+              setTimeout(() => {
+                setNotification({message:'', type:''})
+              }, 5000)
+              
              })
 
         }
