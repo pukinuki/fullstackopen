@@ -14,7 +14,7 @@ const PersonForm = ({persons, setPersons, newName, setNewName, newNumber, setNew
               .update(newPhonePerson.id,newPhonePerson)
               .then(returnedPerson => {
                 setPersons(persons.map(p => p.id!== newPhonePerson.id ? p : returnedPerson))
-
+                console.log('Person',returnedPerson)
                 const notif = {
                   message: `Phone changed for ${returnedPerson.name}`,
                   type: 'notification'
