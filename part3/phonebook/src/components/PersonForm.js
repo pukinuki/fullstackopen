@@ -24,17 +24,30 @@ const PersonForm = ({persons, setPersons, newName, setNewName, newNumber, setNew
                 }, 5000)
               })
               .catch(error => {
-                const errorNotif = {
-                  message: `Information of ${newPhonePerson.name} has already been removed from server`,
-                  type: 'error'
-                }
+                console.log(error)
+                const isValidationError = error.response.status===400
+                
+                let errorNotif = {}
+                if (isValidationError)
+                  errorNotif = {
+                    message: error.response.data.error,
+                    type: 'error'
+                  }
+                else
+                  errorNotif = {
+                    message: `Information of ${newPhonePerson.name} has already been removed from server`,
+                    type: 'error'
+                  }
+
                 setNotification(
                   errorNotif
                 )
                 setTimeout(() => {
                   setNotification({message:'', type:''})
                 }, 5000)
-                setPersons(persons.filter(p => p.id!== newPhonePerson.id))
+
+                if(!isValidationError)
+                  setPersons(persons.filter(p => p.id!== newPhonePerson.id))
               }) 
           }
            
@@ -62,6 +75,21 @@ const PersonForm = ({persons, setPersons, newName, setNewName, newNumber, setNew
                 setNotification({message:'', type:''})
               }, 5000)
               
+             })
+             .catch(error=>{
+              const errorNotif = {
+                message: error.response.data.error,
+                type: 'error'
+              }
+              setNotification(
+                errorNotif
+              )
+              setTimeout(() => {
+                setNotification({message:'', type:''})
+              }, 5000)
+
+              if (error.response.status===409)
+                setPersons(persons.concat(error.response.data.person))
              })
 
         }
