@@ -20,5 +20,20 @@ const createBlog = async newBlog => {
   return response.data
 }
 
-// eslint-disable-next-line import/no-anonymous-default-export
-export default { getAll, setToken, createBlog }
+const giveLike = async blog => {
+  const likeBlog = { ...blog }
+  likeBlog.likes++
+
+  const response = await axios.put(baseUrl.concat(`/${blog.id}`), likeBlog)
+  return response.data
+}
+
+const deleteBlog = async blog => {
+  const config = {
+    headers: { Authorization: token },
+  }
+  const response = await axios.delete(baseUrl.concat(`/${blog.id}`), config)
+  return response.data
+}
+
+export default { getAll, setToken, createBlog, giveLike, deleteBlog }
