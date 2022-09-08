@@ -2,7 +2,7 @@ import { useState } from 'react'
 import blogService from '../services/blogs'
 import PropTypes from 'prop-types'
 
-const Blog = ({ blog, blogs, setBlogs, isUserBlog }) => {
+const Blog = ({ blog, blogs, setBlogs, isUserBlog, likeHandle }) => {
 
   const [visible, setVisible] = useState(false)
 
@@ -35,15 +35,18 @@ const Blog = ({ blog, blogs, setBlogs, isUserBlog }) => {
 
   const removeButton = isUserBlog ? <button onClick={removeBlogHandle}>remove</button> : <></>
 
+  if (!likeHandle)
+    likeHandle = likeButtonHandle
+
   return (
     <div style={blogStyle}>
-      <div>
+      <div className='blog'>
         {blog.title} {blog.author}
         <button style={hideWhenVisible} onClick={toggleVisibility}>{'view'}</button>
         <button style={showWhenVisible} onClick={toggleVisibility}>{'hide'}</button>
-        <div style={showWhenVisible}>
+        <div style={showWhenVisible} className='blog-details'>
           <div>{blog.url}</div>
-          <div>likes {blog.likes} <button onClick={likeButtonHandle}>like</button></div>
+          <div>likes {blog.likes} <button onClick={likeHandle}>like</button></div>
           <div>{blog.user.name}</div>
           {removeButton}
         </div>

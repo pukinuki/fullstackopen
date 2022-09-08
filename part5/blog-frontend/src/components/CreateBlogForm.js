@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import blogService from '../services/blogs'
 
-const CreateBlogForm = ({ setNotification, setBlogs, blogs }) => {
+const CreateBlogForm = ({ setNotification, setBlogs, blogs, handleNewBlog }) => {
 
   const [title, setTitle] = useState('')
   const [author, setAuthor] = useState('')
@@ -33,10 +33,14 @@ const CreateBlogForm = ({ setNotification, setBlogs, blogs }) => {
       }, 5000)
     }
   }
+
+  if (!handleNewBlog)
+    handleNewBlog = handleCreateBlog
+
   return(
     <>
       <h2>create new</h2>
-      <form onSubmit={handleCreateBlog}>
+      <form onSubmit={handleNewBlog}>
         <div>
               title:
           <input
