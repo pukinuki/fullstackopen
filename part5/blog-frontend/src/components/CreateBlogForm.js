@@ -44,6 +44,7 @@ const CreateBlogForm = ({ setNotification, setBlogs, blogs, handleNewBlog }) => 
         <div>
               title:
           <input
+            id="title"
             type="text"
             value={title}
             name="Title"
@@ -52,7 +53,8 @@ const CreateBlogForm = ({ setNotification, setBlogs, blogs, handleNewBlog }) => 
         <div>
               author:
           <input
-            type="author"
+            id="author"
+            type="text"
             value={author}
             name="Author"
             onChange={({ target }) => setAuthor(target.value)} />
@@ -60,12 +62,13 @@ const CreateBlogForm = ({ setNotification, setBlogs, blogs, handleNewBlog }) => 
         <div>
               url:
           <input
-            type="url"
+            id="url"
+            type="text"
             value={url}
             name="URL"
             onChange={({ target }) => setUrl(target.value)} />
         </div>
-        <button type="submit">create</button>
+        <button id="create-button" type="submit">create</button>
       </form>
     </>
   )

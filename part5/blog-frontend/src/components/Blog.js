@@ -33,7 +33,7 @@ const Blog = ({ blog, blogs, setBlogs, isUserBlog, likeHandle }) => {
     }
   }
 
-  const removeButton = isUserBlog ? <button onClick={removeBlogHandle}>remove</button> : <></>
+  const removeButton = isUserBlog ? <button className='remove-button' onClick={removeBlogHandle}>remove</button> : <></>
 
   if (!likeHandle)
     likeHandle = likeButtonHandle
