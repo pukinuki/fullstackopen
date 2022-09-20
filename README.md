@@ -1,2 +1,2 @@
 # fullstackopen
-Course of fullstackopen.org
+Course of fullstackopen.com
