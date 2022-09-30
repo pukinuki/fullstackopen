@@ -1,0 +1,6 @@
+# Ignore artifacts:
+cypress
+node_modules
+build
+coverage
+**/queries.js
