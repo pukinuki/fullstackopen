@@ -25,16 +25,21 @@ const setBirthYearForm = props => {
     setBirthYear('')
   }
 
-  if(props.token) {
+  if (props.token) {
     return (
-      <div><h2>Set birthyear</h2>
+      <div>
+        <h2>Set birthyear</h2>
         <form onSubmit={birthYearSubmit}>
           <div>
-        name
-            <Select value={birthName} onChange={setBirthName} options={options} />
+            name
+            <Select
+              value={birthName}
+              onChange={setBirthName}
+              options={options}
+            />
           </div>
           <div>
-        born
+            born
             <input
               value={birthYear}
               type='number'
@@ -45,9 +50,7 @@ const setBirthYearForm = props => {
         </form>
       </div>
     )
-  }
-  else
-    return <></>
+  } else return <></>
 }
 
 export default setBirthYearForm
